@@ -295,3 +295,46 @@ TEST(TSet, check_negation_operator)
 
   EXPECT_EQ(expSet, set1);
 }
+
+TEST(TSet, can_combine_three_sets_in_one_line)
+{
+  const int size = 6;
+  TSet set1(size), set2(size), set3(size), expSet(size);
+  set1.InsElem(0);
+  set2.InsElem(2);
+  set3.InsElem(5);
+
+  expSet.InsElem(0);
+  expSet.InsElem(2);
+  expSet.InsElem(5);
+
+  EXPECT_EQ(expSet, set1 + set2 + set3);
+}
+
+TEST(TSet, can_intersect_three_sets_in_one_line)
+{
+  const int size = 6;
+  TSet set1(size), set2(size), set3(size), expSet(size);
+  // set1 = {0, 1, 2, 3}, set2 = {1, 2, 3, 4}, set3 = {2, 3, 4, 5}
+  for (int i = 0; i < 4; i++) set1.InsElem(i);
+  for (int i = 1; i < 5; i++) set2.InsElem(i);
+  for (int i = 2; i < 6; i++) set3.InsElem(i);
+
+  // expSet = {2, 3}
+  expSet.InsElem(2);
+  expSet.InsElem(3);
+
+  EXPECT_EQ(expSet, set1 * set2 * set3);
+}
+
+TEST(TSet, can_delete_element_using_minus_operator)
+{
+  const int size = 4;
+  TSet set(size), updatedSet(size);
+  set.InsElem(1);
+  set.InsElem(2);
+  updatedSet = set - 2;
+
+  EXPECT_EQ(0, updatedSet.IsMember(2));
+  EXPECT_NE(0, updatedSet.IsMember(1));
+}

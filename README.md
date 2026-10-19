@@ -1,5 +1,7 @@
 # Методы программирования 2: Множества на основе битовых полей
 
+**Выполнил:** Шерит Эмре, группа 3825Б1ПР3
+
 [![Build Status](https://travis-ci.org/UNN-ITMM-Software/mp2-lab1-set.svg)][travis]
 
 <!-- TODO
