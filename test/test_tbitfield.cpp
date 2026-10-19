@@ -309,3 +309,55 @@ TEST(TBitField, bitfields_with_different_bits_are_not_equal)
 
   EXPECT_NE(bf1, bf2);
 }
+
+TEST(Simple, sum_of_first_five_odd_numbers_is_five_squared)
+{
+  EXPECT_EQ(5 * 5, 1 + 3 + 5 + 7 + 9);
+}
+
+TEST(Simple, sum_of_first_six_odd_numbers_is_six_squared)
+{
+  EXPECT_EQ(6 * 6, 1 + 3 + 5 + 7 + 9 + 11);
+}
+
+TEST(TBitField, double_clear_bit_leaves_it_zero)
+{
+  TBitField bf(10);
+
+  bf.SetBit(5);
+  bf.ClrBit(5);
+  bf.ClrBit(5);
+
+  EXPECT_EQ(0, bf.GetBit(5));
+}
+
+TEST(TBitField, can_chain_or_operator_on_three_bitfields)
+{
+  const int size = 6;
+  TBitField bf1(size), bf2(size), bf3(size), expBf(size);
+  bf1.SetBit(0);
+  bf2.SetBit(2);
+  bf3.SetBit(5);
+
+  expBf.SetBit(0);
+  expBf.SetBit(2);
+  expBf.SetBit(5);
+
+  EXPECT_EQ(expBf, bf1 | bf2 | bf3);
+}
+
+TEST(TBitField, can_chain_and_operator_on_three_bitfields)
+{
+  const int size = 6;
+  TBitField bf1(size), bf2(size), bf3(size), expBf(size);
+  // bf1 = 111100, bf2 = 011110, bf3 = 001111
+  for (int i = 0; i < 4; i++) bf1.SetBit(i);
+  for (int i = 1; i < 5; i++) bf2.SetBit(i);
+  for (int i = 2; i < 6; i++) bf3.SetBit(i);
+
+  // expBf = 001100
+  expBf.SetBit(2);
+  expBf.SetBit(3);
+
+  EXPECT_EQ(expBf, bf1 & bf2 & bf3);
+}
